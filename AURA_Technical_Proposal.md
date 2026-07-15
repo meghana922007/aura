@@ -104,6 +104,21 @@ The AURA intelligence hierarchy is organized as follows:
       +--------------------------------------------+
 ```
 
+#### **5.1 Technology Stack Details**
+
+The underlying technology stack of AURA is selected for lightweight edge operations and high-performance browser rendering:
+
+| Layer | Technology |
+| :--- | :--- |
+| **Frontend** | React, Vite |
+| **Styling** | CSS Glassmorphism |
+| **Charts** | SVG / Canvas |
+| **Knowledge Layer** | In-memory Graph |
+| **Similarity Engine** | Jaccard Matching |
+| **File Parsing** | HTML5 FileReader |
+| **AI Reasoning** | Rule Engine |
+| **State Management** | React Hooks |
+
 ---
 
 ### **6. CORE AI COMPONENTS & ALGORITHMS**
