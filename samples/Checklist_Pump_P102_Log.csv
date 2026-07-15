@@ -1,0 +1,3 @@
+date,tag,vibration,temperature,lubrication
+2026-07-15,P-102,7.8,79,38
+Action log: Checked pump housing. Vibration is 7.8 mm/s due to loose bearing cap. Core temp is 79 C. Viscosity low.

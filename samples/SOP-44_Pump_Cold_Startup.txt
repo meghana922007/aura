@@ -1,0 +1,13 @@
+STANDARD OPERATING PROCEDURE: FEED WATER PUMPS STARTUP (SOP-44)
+==============================================================
+Identifier: SOP-44-PUMP-STARTUP
+Applicability: Feed Pumps P-102, P-103, P-104
+
+Pre-Startup Inspection Checklist:
+1. Lubrication Levels: Visually verify that bearing oil reservoirs register above 50% capacity. Refill synthetic viscosity oil if low.
+2. Earth Bonding check: Verify grounding copper braid has resistance under 5.0 Ohms (conforming to regulatory safety code OISD-STD-189).
+3. Valves setup: 100% open suction line. Hold discharge line closed until nominal operating current has stabilized.
+
+Sensor Bounds during normal operation:
+- Stator temp limits: 45°C to 60°C. Stator trip alarm will engage at 75°C. Automatic emergency shutdown engages at 85°C.
+- Normal vibration limit: 1.5 to 3.5 mm/s. High-level warning triggers at 4.5 mm/s. Emergency safety trip triggers at 8.5 mm/s.

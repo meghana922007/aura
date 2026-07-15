@@ -1,0 +1,12 @@
+OISD STANDARD - 189: ROTATING MACHINERY COMPLIANCE
+===================================================
+Identifier: OISD-STD-189-SAFETY
+Authority: Oil Industry Safety Directorate
+
+Section 4.2: Earthing and Grounding Safety Rules:
+- Stator, frame, and motor casings of rotating machinery (Pumps P-102, Compressors C-302) must have dual grounding copper braids.
+- CASING RESISTANCE: Max grounding resistance must check below 5.0 Ohms at all times. Inspections are scheduled every 90 days.
+
+Section 8.5: Extinguishers Compliance:
+- Fire safety equipment, CO2, and dry chemical powder extinguishers in mechanical rooms must be recertified, weight checked, and tagged every 180 days.
+- Overdue extinguishers constitute a class-A regulatory audit violation.
