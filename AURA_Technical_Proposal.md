@@ -258,4 +258,4 @@ AURA demonstrates how explainable AI, industrial knowledge graphs, and autonomou
   [Scan to View Repo]                 [Scan to View Video]
 ```
 *   **Codebase Repo:** [https://github.com/meghana922007/aura](https://github.com/meghana922007/aura)
-*   **Live Prototype:** [http://localhost:5181/](http://localhost:5181/)
+*   **Live Prototype:** [https://aura-rho-umber.vercel.app](https://aura-rho-umber.vercel.app)

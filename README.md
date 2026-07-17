@@ -1,6 +1,8 @@
 # AURA 🌌
 ### **Autonomous Industrial Intelligence Coordinator & Memory Graph**
 
+**Live Prototype URL:** [https://aura-rho-umber.vercel.app](https://aura-rho-umber.vercel.app)
+
 AURA is an enterprise-grade, edge-compatible decision intelligence system built for heavy industrial manufacturing plants (Boilers, Centrifugal Pumps, Compressors, Safety Valves). 
 
 Drawing design principles from **Apple's visionOS** (translucent glassmorphism), **Palantir Foundry** (operational topological depth), and **Grafana** (real-time telemetry and explainability clarity), AURA processes heterogeneous unstructured manuals, compliance logs, and emails to dynamically calculate Remaining Useful Life (RUL) margins and trace causal failure patterns.
