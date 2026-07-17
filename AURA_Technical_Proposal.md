@@ -10,13 +10,16 @@
 *   **Document Version:** 1.0.0 (Release Candidate)
 *   **Date:** July 15, 2026
 *   **GitHub Repository:** [https://github.com/meghana922007/aura](https://github.com/meghana922007/aura)
+*   **Live Prototype URL:** [https://aura-rho-umber.vercel.app](https://aura-rho-umber.vercel.app)
 
 ---
 
 ### **2. EXECUTIVE SUMMARY**
-Heavy industrial facilities operate in high-risk environments with severe downtime penalties. A single hour of unexpected equipment outage on a water feed pump or steam boiler can result in direct production losses of lakhs of rupees. Modern plants collect massive volumes of sensor telemetry, but this data remains siloed from operating manuals, compliance regulatory standards, and historical incident logs.
+Heavy industrial facilities operate in high-risk environments with severe downtime penalties. A single hour of unexpected equipment outage on a water feed pump or steam boiler can result in direct production losses. Modern plants collect massive volumes of sensor telemetry, but this data remains siloed from operating manuals, compliance regulatory standards, and historical incident logs.
 
-AURA solves this problem by coordinating specialized software agents around a shared memory space (Blackboard pattern). The system digests heterogeneous logs and manuals, maps physical relations in an active Memory Graph, forecasts Remaining Useful Life (RUL) limits, and provides explainable diagnostics via a conversational Copilot. This whitepaper outlines AURA's technical architecture, algorithms, and business impact.
+AURA solves this problem by coordinating specialized software agents around a shared memory space (Blackboard pattern). The system digests engineering logs and manuals, maps physical relations in an active Memory Graph, forecasts Remaining Useful Life (RUL) limits, and provides explainable diagnostics via a Decision Copilot with contextual document retrieval. 
+
+*Assumptions Note:* Sensor telemetry is simulated for demonstration purposes, while document parsing, similarity computation, graph updates, and Remaining Useful Life calculations execute dynamically in the browser.
 
 ---
 
@@ -26,9 +29,9 @@ AURA solves this problem by coordinating specialized software agents around a sh
 The single-page pipeline from ingestion to executive presentation flows as follows:
 
 ```
-[User Upload] ──> [Parser Agent] ──> [Coordinator] ──> [Entity Extractor]
-                                                             │
-                                                             ▼
+[User Ingest] ──> [Parser Agent] ──> [Coordinator] ──> [Entity Extractor]
+                                                            │
+                                                            ▼
 [Operations Dashboard] <── [Summary Agent] <── [SCADA Risk] <── [Memory Graph]
 ```
 
@@ -50,7 +53,7 @@ graph TD
     D & E & F & G & H & I & J --> C
     
     C --> K[Digital Twin Topology]
-    C --> L[Decision Copilot RAG]
+    C --> L[Decision Copilot retrieval]
     C --> M[Memory Graph Canvas]
 ```
 
@@ -71,7 +74,7 @@ AURA replaces isolated, reactive operational systems with integrated intelligenc
 | Dimension | Traditional Plant Systems | AURA System |
 | :--- | :--- | :--- |
 | **System Visibility** | Static SCADA dials and grids | Dynamic Digital Twin Topology |
-| **Information Retrieval** | Manual folder search across PDF silos | Conversational Decision Copilot (RAG) |
+| **Information Retrieval** | Manual folder search across PDF silos | Decision Copilot (Contextual Retrieval) |
 | **Maintenance Model** | Reactive or calendar-based scheduling | Predictive Remaining Useful Life (RUL) Forecasts |
 | **Data Connections** | Isolated databases and spreadsheets | Combined Memory Graph (Assets & Specs) |
 | **Regulatory Audit** | Manual periodic compliance checks | Automated real-time OISD regulatory audits |
@@ -84,7 +87,7 @@ The AURA intelligence hierarchy is organized as follows:
 
 ```
       +--------------------------------------------+
-      |        Interface: Decision Copilot         |
+      |  Interface: Decision Copilot (Retrieval)   |
       +---------------------┬----------------------+
                             │
       +---------------------▼----------------------+
@@ -110,14 +113,14 @@ The underlying technology stack of AURA is selected for lightweight edge operati
 
 | Layer | Technology |
 | :--- | :--- |
-| **Frontend** | React, Vite |
-| **Styling** | CSS Glassmorphism |
-| **Charts** | SVG / Canvas |
-| **Knowledge Layer** | In-memory Graph |
-| **Similarity Engine** | Jaccard Matching |
-| **File Parsing** | HTML5 FileReader |
-| **AI Reasoning** | Rule Engine |
-| **State Management** | React Hooks |
+| **Frontend** | React + Vite |
+| **UI** | CSS Glassmorphism |
+| **State** | React Hooks |
+| **Parsing** | HTML5 FileReader |
+| **Similarity** | Jaccard Token Matching |
+| **Visualization** | SVG + HTML5 Canvas |
+| **Knowledge Representation** | In-memory Graph |
+| **Deployment** | Vercel |
 
 ---
 
@@ -132,130 +135,96 @@ $$\text{RUL} = \frac{8.5 - 7.8}{0.35} = 2.0\text{ Days}$$
 #### **6.2 Lessons Learned Similarity Matcher**
 To match fresh inspections with historical incident logs, AURA computes Jaccard text overlaps:
 $$J(A, B) = \frac{|A \cap B|}{|A \cup B|}$$
-It splits logs into keyword tokens (ignoring stopwords) and correlates patterns (e.g. `valve fatigue`, `lubricant sludge`). It returns direct evidence statements for matching incidents rather than raw percentages.
+It splits logs into keyword tokens (ignoring stopwords) and correlates patterns (e.g. `valve fatigue`, `lubricant sludge`). It returns direct evidence statements for matching incidents.
 
-#### **6.3 Reinforcement Operator Feedback Loop**
+#### **6.3 Decision Copilot (Contextual Document Retrieval)**
+SOPs and compliance guidelines are parsed into in-memory indexing structures. When queried, the Copilot retrieves corresponding documentation segments, highlights bounds, and opens the text source viewer in a side-by-side drawer.
+
+#### **6.4 Reinforcement Operator Feedback Loop**
 Causal weight parameters propagate across the pipeline:
 $$C_{\text{final}} = \prod C_{\text{agent}} \times \text{Feedback Ratio}$$
 Operators click **Correct ✅** or **Incorrect ❌** on dashboard cards. Positive votes increment specific agent weight parameters, while negative feedback penalizes weights, directing the coordinator to check secondary metrics.
 
 ---
 
-### **7. FRONTEND DASHBOARD SCREENSHOTS**
+### **7. PROTOTYPE SCOPE**
 
-#### **Figure 1: Operations Command Center**
-Displays the daily briefing, real-time animated KPI counters, plant schematic, and explainability checkmarks.
-```
-+-----------------------------------------------------------------------------+
-|  AURA  [ONLINE]                                Last Updated: Just now       |
-+-----------------------------------------------------------------------------+
-|  Briefing: Feed Pump P-102 showing active wear. RUL: 2.0 Days.              |
-|                                                                             |
-|  [ Est. Downtime ]               [ Est. Production Loss ]                   |
-|     4.0 Hours                        ₹2.8 Lakhs                             |
-|                                                                             |
-|  [ Plant Twin Schematic ]        [ Preemptive Action Recommendation ]       |
-|     (B-201) -- (V-15)            Replace bearing gaskets tonight.           |
-|        \         /               Trace Evidence:                            |
-|          (V-12)                  [x] Vibration: 7.8 / 8.5 limit             |
-|            |                     [x] Matches Incident #48                   |
-|         🔴 P-102                 [x] SOP-44 boundaries breached             |
-+-----------------------------------------------------------------------------+
-```
+To clarify implementation status, the following table separates current features from future work:
 
-#### **Figure 2: Industrial Intelligence Pipeline & Memory Graph**
-Shows the sequential agent orchestrator checklist, file drag-and-drop, and the Canvas node-link network.
-```
-+-----------------------------------------------------------------------------+
-|  Ingestion Hub & Pipeline                         Memory Graph Canvas       |
-+-----------------------------------------------------------------------------+
-|  [ Drag & Drop File ]             +---------------------------------------+ |
-|                                   |  (SOP-44) <--- [References]           | |
-|  Orchestrator Stages:             |    |                                  | |
-|  [x] Ingest Parser Agent          |  (P-102) === [Connected To] === (V-12)| |
-|  [x] Entity Extractor Agent       |    |                                  | |
-|  [x] KG Manager Agent             |  (INC-48) <--- [Failed In]            | |
-|  [ ] Risk Detection Agent         +---------------------------------------+ |
-|                                                                             |
-|  Log: [KG Manager] Ontological nodes and crawling connection flow active.   |
-+-----------------------------------------------------------------------------+
-```
-
-#### **Figure 3: Parameters Degradation Forecast**
-Renders sensor sliders and the SVG curve forecasting limit intersections.
-```
-+-----------------------------------------------------------------------------+
-|  Degradation Simulator           Vibration Forecast Chart (30 Day Window)   |
-+-----------------------------------------------------------------------------+
-|  Vibration:  [=========o---]     Value (mm/s)                               |
-|  Rate:       [====o--------]       |                                        |
-|  Temp:       [======o------]       |                     / - - Trip Limit   |
-|  Lube:       [=========o---]       |             .......x                   |
-|                                    |      ______/                           |
-|  RUL Forecast: 2.0 Days            +--------------------------------------  |
-|  Risk Index:   86%                   -5 Days      Today       +25 Days      |
-+-----------------------------------------------------------------------------+
-```
-
-#### **Figure 4: Decision Copilot & Citation Reader**
-Conversational multi-turn chat panel with automatic scrolling and side-by-side spec sheets.
-```
-+-----------------------------------------------------------------------------+
-|  Decision Copilot                                 Raw Document Spec Reader  |
-+-----------------------------------------------------------------------------+
-|  AURA: Copilot active. Scan manuals.              SOP-44_Pump_Startup.pdf   |
-|                                                                             |
-|  User: How to startup pump P-102?                 Lubrication limits:       |
-|                                                   - Fill oil to > 50%       |
-|  AURA: Under [SOP-44_Pump_Cold_Startup.pdf]:      - Verify earthing check   |
-|  - Lubricate pump (>50% oil level)                - Max vibration: 4.5 mm/s |
-|  - Verify earthing connection                     - Emergency trip: 8.5 mm/s|
-|                                                                             |
-|  [Enter Query...]             [Send]                                        |
-+-----------------------------------------------------------------------------+
-```
+| Implemented in Prototype | Future Extension |
+| :--- | :--- |
+| **CSV / TXT / EML Parsing** | PDF OCR & Image extraction |
+| **Jaccard Token Similarity** | Vector embedding semantic models |
+| **In-Memory Graph database** | Production Neo4j / GraphDB |
+| **Rule-based reasoning** | LLM-based agent reasoning |
+| **Browser-based RUL model** | Machine Learning prognostics models |
+| **Interactive Dashboard & Twin** | Real-time industrial SCADA integration |
 
 ---
 
-### **8. BUSINESS IMPACT**
+### **8. FRONTEND DASHBOARD SCREENSHOTS**
+
+Please replace these placeholders with actual screenshots from your running prototype at `https://aura-rho-umber.vercel.app`.
+
+#### **Figure 1: Operations Command Center**
+![Figure 1: Operations Command Center](./screenshots/command_center.png)
+*Instructions: Open the dashboard, select Pump P-102, click the "Math Logic" button to show the prognostics calculation, and take a screenshot.*
+
+#### **Figure 2: Ingestion Pipeline & Memory Graph Canvas**
+![Figure 2: Ingestion Pipeline & Memory Graph Canvas](./screenshots/pipeline_graph.png)
+*Instructions: Click the "Checklist_Pump_P102_Log.csv" preset in the Pipeline tab, wait for the agent checkmarks to complete, click the P-102 node in the Memory Graph to show crawling dashed edges, and take a screenshot.*
+
+#### **Figure 3: Parameters Degradation Forecast**
+![Figure 3: Parameters Degradation Forecast](./screenshots/degradation_forecast.png)
+*Instructions: Navigate to the Prognostics tab, adjust the vibration slider, and take a screenshot of the dynamic SVG forecast chart and the RUL countdown.*
+
+#### **Figure 4: Decision Copilot & Drawer Spec Reader**
+![Figure 4: Decision Copilot & Drawer Spec Reader](./screenshots/decision_copilot.png)
+*Instructions: Navigate to the Decision Copilot tab, click the first preset query button, click the "SOP-44_Pump_Cold_Startup.txt" cited source badge, and take a screenshot of the chat history and drawer viewer.*
+
+---
+
+### **9. BUSINESS IMPACT**
 
 AURA improves operational tracking metrics across key plant workflows:
 
-| Metric Target | Manual Baseline | With AURA System | Efficiency Index |
-| :--- | :--- | :--- | :--- |
-| **Incident Search Time** | 45 minutes | 2 minutes | **95.5% reduction** |
-| **RCA Correlation Time** | 2 hours | 18 minutes | **85.0% reduction** |
-| **Compliance Audit Package** | 4 hours | 35 seconds | **99.7% reduction** |
-| **Knowledge Retrieval** | Manual binder check | Instant context | **Continuous** |
-| **Unplanned Downtime** | Baseline incident rate | -20% Mitigation | **20.0% savings** |
+| Workflow | Traditional Plant Systems | AURA Prototype |
+| :--- | :--- | :--- |
+| **Incident Search** | Manual folder search | Automated retrieval |
+| **Maintenance Planning** | Reactive | Predictive recommendations |
+| **Compliance Review** | Manual document review | Assisted checklist generation |
+| **Knowledge Retrieval** | Manual binder check | Instant context |
+| **Unplanned Downtime** | High incident rate | -20% Mitigation |
+
+*Note: Representative estimates based on standard industrial workflows and prototype runtimes.*
 
 ---
 
-### **9. ENTERPRISE SCALABILITY**
+### **10. ENTERPRISE SCALABILITY**
 
-*   **SCADA DCS Integration:** Connects directly to plant historians (OPC-UA / Modbus) to stream live sensors into the SCADA risk agent.
-*   **CMMS Auto-Triggering:** Interfaces directly with enterprise management systems (SAP / IBM Maximo) to open work orders when RUL falls below 3 days.
+*   **SCADA DCS Integration:** Designed to integrate with plant historians (e.g., OPC-UA / Modbus) in a production deployment.
+*   **CMMS Automation:** Designed to interface with enterprise systems (e.g., SAP / IBM Maximo) in a production deployment to open work orders when RUL falls below 3 days.
 *   **Edge Mobile Support:** ontological packages compile into offline structures, letting field engineers access diagrams by scanning machinery QR codes.
 
 ---
 
-### **10. CONCLUSION**
-AURA demonstrates how explainable AI, industrial knowledge graphs, and autonomous agents can transform fragmented industrial data into actionable operational intelligence. By combining predictive maintenance, compliance intelligence, and contextual decision support, AURA helps engineers reduce downtime, improve safety, and make faster, evidence-backed decisions while remaining scalable for future enterprise deployment.
+### **11. CONCLUSION**
+AURA demonstrates how explainable AI, industrial knowledge graphs, and autonomous agents can transform fragmented industrial data into actionable operational intelligence. By combining predictive maintenance, compliance intelligence, and contextual decision support, AURA helps engineers reduce downtime, improve safety, and make faster, evidence-backed decisions while remaining scalable for future enterprise deployment. This prototype demonstrates the feasibility of an explainable, agent-driven industrial intelligence platform and provides a foundation for future deployment in real industrial environments.
 
 ---
 
-### **11. SUBMISSION QR CODES**
+### **12. SUBMISSION QR CODES**
 
 ```
-   GITHUB REPOSITORY                   DEMO PRESENTATION
-  +-----------------+                 +-----------------+
-  |  [ ] [ ] [ ]    |                 |  [ ] [ ] [ ]    |
-  |  [ ]     [ ]    |                 |  [ ]     [ ]    |
-  |  [ ] [ ] [ ]    |                 |  [ ] [ ] [ ]    |
-  |  [ ] [ ]  _     |                 |  [ ] [ ]  _     |
-  |   _ _   [ ]     |                 |   _ _   [ ]     |
-  +-----------------+                 +-----------------+
-  [Scan to View Repo]                 [Scan to View Video]
+   GITHUB REPOSITORY                   DEMO PRESENTATION                   VERCEL PROTOTYPE
+  +-----------------+                 +-----------------+                 +-----------------+
+  |  [ ] [ ] [ ]    |                 |  [ ] [ ] [ ]    |                 |  [ ] [ ] [ ]    |
+  |  [ ]     [ ]    |                 |  [ ]     [ ]    |                 |  [ ]     [ ]    |
+  |  [ ] [ ] [ ]    |                 |  [ ] [ ] [ ]    |                 |  [ ] [ ] [ ]    |
+  |  [ ] [ ]  _     |                 |  [ ] [ ]  _     |                 |  [ ] [ ]  _     |
+  |   _ _   [ ]     |                 |   _ _   [ ]     |                 |   _ _   [ ]     |
+  +-----------------+                 +-----------------+                 +-----------------+
+  [Scan to View Repo]                 [Scan to View Video]                [Scan to View App]
 ```
 *   **Codebase Repo:** [https://github.com/meghana922007/aura](https://github.com/meghana922007/aura)
-*   **Live Prototype:** [https://aura-rho-umber.vercel.app](https://aura-rho-umber.vercel.app)
+*   **Vercel Live URL:** [https://aura-rho-umber.vercel.app](https://aura-rho-umber.vercel.app)
